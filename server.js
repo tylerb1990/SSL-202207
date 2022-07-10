@@ -3,11 +3,52 @@ require("dotenv").config();
 const app = express();
 
 
+
+// GET
 app.get("/", (req, res, next) => {
     res.json({
-        message: "Did you GET it?"
+        message: "Did you GET it?",
+        metadata: {
+            host:req.hostname,
+            port:req.socket.localPort,
+            method: req.method
+        }
     })
 })
+
+// POST
+app.post("/", (req, res, next) => {
+    res.json({
+        metadata: {
+            host:req.hostname,
+            port:req.socket.localPort,
+            method: req.method
+        }
+    })
+});
+
+// PATCH
+app.patch("/", (req, res, next) => {
+    res.json({
+        metadata: {
+            host:req.hostname,
+            port:req.socket.localPort,
+            method: req.method
+        }
+    })
+});
+
+// DELETE
+app.delete("/", (req, res, next) => {
+    res.json({
+        metadata: {
+            host:req.hostname,
+            port:req.socket.localPort,
+            method: req.method
+        }
+    })
+});
+
 
 
 // Middleware modules for error handling
