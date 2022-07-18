@@ -1,0 +1,73 @@
+<form id="contactForm">
+    
+    <!-- Name input-->
+    <div>
+        <label for="firstName">First name</label>
+        <input id="firstName" name="firstName" type="text" placeholder="Enter your first name..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.firstNameMsg %> </span> <% } %>
+    </div>
+    <div>
+        <label for="lastName">Last name</label>
+        <input id="lastName" name="lastName" type="text" placeholder="Enter your last name..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.lastNameMsg %> </span> <% } %>
+    </div>
+
+    <!--Address Input-->
+    <div>
+        <label for="street">Street Address</label>
+        <input id="street" name="street" type="text" placeholder="Enter your street address..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.streetMsg %> </span> <% } %>
+    </div>
+    <div>
+        <label for="city">City</label>
+        <input id="city" name="city" type="text" placeholder="Enter your city..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.cityMsg %> </span> <% } %>
+    </div>
+    <div>
+        <label for="state">State</label>
+        <input id="state" name="state" type="text" placeholder="Enter your state..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.stateMsg %> </span> <% } %>
+    </div>
+    <div>
+        <label for="zip">Zip Code</label>
+        <input id="zip" name="zip" type="text" placeholder="Enter your zip code..."  />
+        <% if(typeof(error) != "undefined") { %> <span> <%- error.zipMsg %> </span> <% } %>
+    </div>
+
+    <!--Age Input-->
+    <div>
+        <label for="age">Age</label>
+        <select name="age" id="age" placeholder="Select"  >
+            <option value="1-20">1 - 20</option>
+            <option value="20-30">20 - 30</option>
+            <option value="30-40">30 - 40</option>
+            <option value="40-50">40 - 50</option>
+            <option value="50+">50+</option>
+        </select>
+    </div>
+
+    <!--Gender Input-->
+    <div>
+        <input type="radio" id="hehim" name="pronouns" value="He/Him">
+        <label for="hehim">He/Him</label>
+        <input type="radio" id="sheher" name="pronouns" value="She/Her">
+        <label for="sheher">She/Her</label>
+        <input type="radio" id="theythem" name="pronouns" value="They/Them">
+        <label for="theythem">They/Them</label>
+    </div>
+
+    <!--Consent-->
+    <div>
+        <input type="checkbox" id="consent" name="consent" value="consent" >
+        <label for="vehicle1">Consent</label><br>
+    </div>
+
+    <!-- Message input-->
+    <div>
+        <label for="bio">About you...</label>
+        <textarea id="bio" name="bio" type="text" placeholder="Enter your bio here..." ></textarea>
+    </div>
+
+    <!-- Submit Button-->
+    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Register</button>
+</form>

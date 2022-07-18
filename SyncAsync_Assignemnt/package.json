@@ -1,0 +1,13 @@
+{
+  "name": "syncasync_assignemnt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "async.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "async.js"
+  },
+  "keywords": [],
+  "author": "Tyler Bunker",
+  "license": "MIT"
+}
