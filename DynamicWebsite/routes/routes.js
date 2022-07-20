@@ -51,9 +51,8 @@ router.get("/signin", (req, res) => {
 
 // Sign in/out route
 router.post("/signin", (req, res) => {
-    let login = false;
-
-    if(login){
+    // Validate credentials
+    if(req.body.username == "mike@aol.com" && req.body.password == "abc123"){
         session = req.session;
         session.userid = "Batman";
         res.render('index', {
@@ -62,7 +61,7 @@ router.post("/signin", (req, res) => {
             sess: session
         });
     }
-    else{
+    else {
         res.render('signin', {
             pagename: "Sign in to your account",
             error: "Invalid email or password"
