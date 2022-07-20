@@ -8,3 +8,6 @@
 ### To run this project: 
 1. npm i
 2. npm start
+
+## Sync/Async Assignemtn
+Just a validation project for sync and async functions. It returns your cirrent IP address.
