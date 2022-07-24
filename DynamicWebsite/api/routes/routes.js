@@ -1,8 +1,9 @@
-// Import
+// Imports
 const express = require("express");
 const router = express.Router();
 const sessions = require("express-session");
-const registration = require('../../db/db')
+const registration = require('../../db/db');
+const getRegistration = require('../api');
 
 
 // Sessions
@@ -82,11 +83,14 @@ router.get("/signout", (req, res) => {
 
 
 // Register route
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res, next) => {
+    // Declare session
     session = req.session;
+
     // Validation Errors
     let error = {};
-    /* let validating = true;
+
+    let validating = true;
 
     if(validating){
         // Validate firt name
@@ -138,9 +142,10 @@ router.post("/register", (req, res) => {
             pagename: "Register for My Newsletter",
             error: error
         });
-    } */
+    }
 
-    registration(req).then(result => {
+    // Validation
+    registration(req).then((result) => {
         console.log(result);
         res.status(200).json({
             message: "Registration Saved",
@@ -161,7 +166,7 @@ router.post("/register", (req, res) => {
                     method: req.method
                 }
             }
-        });
+        });   
     }).catch(err => {
         res.status(500).json({
             message: "Registration Failed",
@@ -175,11 +180,46 @@ router.post("/register", (req, res) => {
             }
         });
     });
-    
-    // Render
-    res.render("register", {
-        pagename: "Register for My Newsletter",
-        error: error
+
+    // Data binding
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const streetAddress = req.body.streetAddress;
+    const city = req.body.city;
+    const state = req.body.state;
+    const zip = req.body.zip;
+    const age = req.body.age;
+    const pronouns = req.body.pronouns;
+    const consent = req.body.consent;
+    const bio = req.body.bio;
+
+    // Registration Data
+    const data = {
+        firstName: firstName,
+        lastName: lastName,
+        streetAddress: streetAddress,
+        city: city,
+        state: state,
+        zip: zip,
+        age: age,
+        pronouns: pronouns,
+        consent: consent,
+        bio: bio
+    }
+
+    // Render valid registration
+    await getRegistration(data).then(result => {
+        console.log(result.data)
+        res.render('register', {
+            pagename: "Register for My Newsletter",
+            sess: session,
+        })
+    })
+    .catch(err => {
+        res.render("register", {
+            pagename: "Register for My Newsletter",
+            error: err
+        });
     });
 });
 
