@@ -1,7 +1,8 @@
 // Import
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const router = require('../routes/routes');
+const router = require('../api/routes/routes');
 
 
 // Request Listener
@@ -53,6 +54,17 @@ app.use((error, req, res, next) => {
             status: error.status,
         }
     });
+})
+
+
+// Mongoose Middleware
+mongoose.connect(process.env.db_url, (err) =>{
+    if(err){
+        console.error('Error', err.message);
+    }
+    else{
+        console.log("MongoDB connection succesful!");
+    }
 })
 
 

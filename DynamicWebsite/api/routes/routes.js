@@ -2,16 +2,20 @@
 const express = require("express");
 const router = express.Router();
 const sessions = require("express-session");
+const registration = require('../../db/db')
+
 
 // Sessions
 router.use(sessions({
     secret: "asdfghjklkjhgfdsa",
     saveUninitialized: true,
     resave: false
-}))
+}));
+
 
 // Session variable
 let session;
+
 
 // Routes
 router.get("/", (req, res) => {
@@ -49,8 +53,9 @@ router.get("/signin", (req, res) => {
     })
 });
 
+
 // Sign in/out route
-router.post("/signin", (req, res) => {
+router.post("/signin", (req, res, next) => {
     // Validate credentials
     if(req.body.username == "mike@aol.com" && req.body.password == "abc123"){
         session = req.session;
@@ -75,12 +80,13 @@ router.get("/signout", (req, res) => {
     })
 });
 
+
 // Register route
 router.post("/register", (req, res) => {
     session = req.session;
     // Validation Errors
     let error = {};
-    let validating = true;
+    /* let validating = true;
 
     if(validating){
         // Validate firt name
@@ -98,7 +104,7 @@ router.post("/register", (req, res) => {
             error.lastNameMsg = "Your last name is required and cannot be blank.";
         }
             // Validate street
-        if(req.body.street != ""){
+        if(req.body.streetAddress != ""){
         }
         else{ 
             error.status = "Registration Failed";
@@ -132,7 +138,49 @@ router.post("/register", (req, res) => {
             pagename: "Register for My Newsletter",
             error: error
         });
-    }
+    } */
+
+    registration(req).then(result => {
+        console.log(result);
+        res.status(200).json({
+            message: "Registration Saved",
+            status: 200,
+            registration: {
+                firstName: result.firstName,
+                lastName: result.lastName,
+                streetAddress: result.streetAddress,
+                city: result.city,
+                state: result.state,
+                zip: result.zip,
+                age: result.age,
+                pronouns: result.pronouns,
+                consent: result.consent,
+                bio: result.bio,
+                metadata: {
+                    hostname: req.hostname,
+                    method: req.method
+                }
+            }
+        });
+    }).catch(err => {
+        res.status(500).json({
+            message: "Registration Failed",
+            status: 500,
+            error: {
+                message: err.message,
+                metadata: {
+                    hostname: req.hostname,
+                    method: req.method
+                },
+            }
+        });
+    });
+    
+    // Render
+    res.render("register", {
+        pagename: "Register for My Newsletter",
+        error: error
+    });
 });
 
 
